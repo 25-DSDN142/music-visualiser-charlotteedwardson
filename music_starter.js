@@ -1,5 +1,5 @@
 let cloudY = -100; // starts just offscreen
-let cloudSize = 175;
+let cloudSize = 175; // 200
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
