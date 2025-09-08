@@ -1,4 +1,5 @@
 let cloudY = -100; // starts just offscreen
+let starY = -1250; // comes in after clouds
 let cloudSize = 175; // 200
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
@@ -54,7 +55,35 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   translate(-200, -250);
   drawCloud()
   pop();
+
+  drawLand()
 }
+
+function drawLand() {
+
+   beginShape();
+   fill(150, 240, 155); 
+   vertex(0, 850);
+   vertex(0, 750);
+   vertex(250, 800);
+   vertex(540, 750);
+   vertex(540, 960);
+   vertex(0, 960); 
+   endShape(CLOSE);
+
+   beginShape();
+   fill(40, 130, 115); 
+   vertex(0, 800);
+   vertex(100, 850);
+   vertex(250, 900);
+   vertex(540, 850);
+   vertex(540, 960);
+   vertex(0, 960); 
+   endShape(CLOSE);
+
+
+}
+
 
 function drawCloud() {
 var ColourCloudLight = color(230, 210, 255) // 230, 210, 255
@@ -99,7 +128,7 @@ function drawSparkle() {
 var sparkle = {
    locationX: random(width),
    locationY: random(height),
-   size: random(1, 6)
+   size: random(5, 10)
 }
 
 fill(255); //white sparkles
@@ -112,36 +141,43 @@ ellipse(sparkle.locationX, sparkle.locationY, sparkle.size, sparkle.size);
 function drawStar() {
 let opacityStar = color(250, 240, 255);
    beginShape();
+   noStroke();
    fill(250, 240, 255);
-  vertex(250, 150); 
-  vertex(300, 200);
-  vertex(250, 250);
-  vertex(200, 200); 
+  vertex(250, starY+150); 
+  vertex(300, starY+200);
+  vertex(250, starY+250);
+  vertex(200, starY+200); 
   endShape(CLOSE); // base diamond shape done
 
    beginShape();
    fill(250, 240, 255); 
-   vertex(250, 100);
-   vertex(290, 200);
-   vertex(250, 300);
-   vertex(210, 200); 
+   vertex(250, starY+100);
+   vertex(290, starY+200);
+   vertex(250, starY+300);
+   vertex(210, starY+200); 
    endShape(CLOSE);
 
    beginShape();
    opacityStar.setAlpha(120);
    fill(opacityStar); 
-   vertex(250, 75);
-   vertex(315, 200);
-   vertex(250, 325);
-   vertex(185, 200); 
+   vertex(250, starY+75);
+   vertex(315, starY+200);
+   vertex(250, starY+325);
+   vertex(185, starY+200); 
    endShape(CLOSE);
 
    beginShape();
    opacityStar.setAlpha(120);
    fill(opacityStar); 
-   vertex(250, 50);
-   vertex(340, 200);
-   vertex(250, 350);
-   vertex(160, 200); 
+   vertex(250, starY+50);
+   vertex(340, starY+200);
+   vertex(250, starY+350);
+   vertex(160, starY+200); 
    endShape(CLOSE);
+
+   starY = starY +0.25
+
+if(starY > 1600){ // ends just off screen
+starY = -100
+}
 }
