@@ -1,9 +1,14 @@
 let cloudY = -100; // starts just offscreen
 let starY = -1250; // comes in after clouds
-let cloudSize = 175; // 200
+let cloudSize = 200; //200
+let starSize = 100; // 100
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
+cloudSize = map(other, 0, 100, 130, 180); //subtle cloud size changes with other volumes
+starSize = map(vocal, 0, 100, 80, 130);   // subtle star size changes with vocal volunems
+   
+//background colour changes over time with AI copilot created star field
   var r = 120;
   var g = 100;
   var b = 250;
@@ -13,48 +18,104 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   b = map(frameCount-500, 0, 960, 250, 150);
   background(r, g, b);
   
+// --- Add these globals ---
+let stars = [];
+const numStars = 100;
+let firstRun = true;
+
+
+  // --- Initialize stars on first run ---
+  if (firstRun) {
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: random(-width/2, width/2),
+        y: random(-height/2, height/2),
+        z: random(width)
+      });
+    }
+    firstRun = false;
+  }
+
+  //commented out//translate(width/2, height/2); // Center origin
+
+  // Map bass (0-100) to lerp amount (0-1)
+  let lerpAmt = map(bass, 0, 100, 0, 1);
+
+  for (let star of stars) {
+    // Move star forward
+    star.z -= 10;
+    if (star.z < 1) {
+      // Reset star to far away
+      star.x = random(-width/2, width/2);
+      star.y = random(-height/2, height/2);
+      star.z = width;
+    }
+
+    // Project 3D to 2D
+    let sx = star.x * (width / star.z);
+    let sy = star.y * (width / star.z);
+
+    let r = map(star.z, 0, width, 8, 0.5); // Size based on depth
+
+    noStroke();
+    fill(255);
+    ellipse(sx, sy, r, r);
+  }
 
 
 
   //draw stars
    push();
+  translate(200, starY+100)
   scale(0.9)
-  translate(225, 100)
   drawStar()
   pop();
 
   push();
+  translate(-100,starY-50)
   scale(0.7)
-  translate(100,-50)
   drawStar()
   pop();
 
   push();
+  translate(0, starY+350);
   scale(0.6)
-  translate(-100, 350);
   drawStar()
   pop();
+
+  starY = starY +0.4
+
+if(starY > 3500){ // ends just off screen
+starY = -100
+}
 
   //draw sparkles in
-  drawSparkle()
+  //drawSparkle()
 
   //draw clouds
   push();
-  translate(100, -150)
+  translate(200, cloudY-150)
+  scale(0.8)
   drawCloud() 
   pop();
 
   push();
-  scale(0.8)
-  translate(150, -400);
+  translate(150, cloudY-400);
+  scale(0.7)
   drawCloud()
   pop();
 
   push();
-  scale(0.8)
-  translate(-200, -250);
+  translate(-200, cloudY-250);
+  scale(0.9)
   drawCloud()
   pop();
+
+  cloudY = cloudY +0.4
+
+if(cloudY > 2500){ // ends just off screen
+cloudY = -100
+}
 
   drawLand()
 }
@@ -62,21 +123,21 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 function drawLand() {
 
    beginShape();
-   fill(150, 240, 155); 
+   fill(40, 130, 115); 
    vertex(0, 850);
-   vertex(0, 750);
-   vertex(250, 800);
+   vertex(0, 725);
+   vertex(350, 700);
    vertex(540, 750);
-   vertex(540, 960);
+   vertex(540, 900);
    vertex(0, 960); 
    endShape(CLOSE);
 
    beginShape();
-   fill(40, 130, 115); 
-   vertex(0, 800);
+   fill(150, 240, 155); 
+   vertex(0, 850);
    vertex(100, 850);
-   vertex(250, 900);
-   vertex(540, 850);
+   vertex(350, 900);
+   vertex(540, 875);
    vertex(540, 960);
    vertex(0, 960); 
    endShape(CLOSE);
@@ -93,91 +154,79 @@ var ColourCloudShadow = color(200, 160, 210) //200, 160, 210
 
 noStroke()
 fill(ColourCloudLight) //highlight
-ellipse(250, cloudY+150, cloudSize)
+ellipse(250, 150, cloudSize)
 
 noStroke()
 fill(ColourCloudLight) //highlight
-ellipse(350, cloudY+195, cloudSize-40, cloudSize-70)
+ellipse(350, 195, cloudSize-40, cloudSize-70)
 
 noStroke()
 fill(ColourCloudShadow)
-ellipse(170, cloudY+185, cloudSize-40)
+ellipse(170, 185, cloudSize-40)
 
 noStroke()
 fill(ColourCloudShadow)
-ellipse(240, cloudY+170, cloudSize)
+ellipse(240, 170, cloudSize)
 
 noStroke()
 fill(ColourCloudLight) //highlight
-ellipse(280, cloudY+190, cloudSize, cloudSize-50)
+ellipse(280, 190, cloudSize, cloudSize-50)
 
 noStroke()
 fill(ColourCloudShadow)
-ellipse(240, cloudY+200, cloudSize+50, cloudSize-60)
-
-cloudY = cloudY +0.25
-
-if(cloudY > 1600){ // ends just off screen
-cloudY = -100
-}
+ellipse(240, 200, cloudSize+50, cloudSize-60)
 
 }
 
-function drawSparkle() {
+//function drawSparkle() {
 
-var sparkle = {
-   locationX: random(width),
-   locationY: random(height),
-   size: random(5, 10)
-}
+//var sparkle = {
+//   locationX: random(width),
+//   locationY: random(height),
+//  size: random(5, 10)
+//}
 
-fill(255); //white sparkles
-noStroke();
-ellipse(mouseX, mouseY, sparkle.size, sparkle.size);
-ellipse(sparkle.locationX, sparkle.locationY, sparkle.size, sparkle.size);
+//fill(255); //white sparkles
+//noStroke();
+//ellipse(mouseX, mouseY, sparkle.size, sparkle.size);
+//ellipse(sparkle.locationX, sparkle.locationY, sparkle.size, sparkle.size);
 
-}
+//}
 
 function drawStar() {
 let opacityStar = color(250, 240, 255);
    beginShape();
    noStroke();
    fill(250, 240, 255);
-  vertex(250, starY+150); 
-  vertex(300, starY+200);
-  vertex(250, starY+250);
-  vertex(200, starY+200); 
+  vertex(250, 150); 
+  vertex(250+starSize, 200);
+  vertex(250, 250);
+  vertex(250-starSize, 200);
   endShape(CLOSE); // base diamond shape done
 
    beginShape();
    fill(250, 240, 255); 
-   vertex(250, starY+100);
-   vertex(290, starY+200);
-   vertex(250, starY+300);
-   vertex(210, starY+200); 
+   vertex(250, 100);
+   vertex(290, 200);
+   vertex(250, 300);
+   vertex(210, 200); 
    endShape(CLOSE);
 
    beginShape();
    opacityStar.setAlpha(120);
    fill(opacityStar); 
-   vertex(250, starY+75);
-   vertex(315, starY+200);
-   vertex(250, starY+325);
-   vertex(185, starY+200); 
+   vertex(250, 75);
+   vertex(315, 200);
+   vertex(250, 325);
+   vertex(185, 200); 
    endShape(CLOSE);
 
    beginShape();
    opacityStar.setAlpha(120);
    fill(opacityStar); 
-   vertex(250, starY+50);
-   vertex(340, starY+200);
-   vertex(250, starY+350);
-   vertex(160, starY+200); 
+   vertex(250, 50);
+   vertex(340, 200);
+   vertex(250, 350);
+   vertex(160, 200); 
    endShape(CLOSE);
-
-   starY = starY +0.25
-
-if(starY > 1600){ // ends just off screen
-starY = -100
-}
 }
