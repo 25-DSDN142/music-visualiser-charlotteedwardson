@@ -119,8 +119,6 @@ cloudY = -100
 
 //draw planets
   push();
-  translate(-100, 50)
-  scale(0.8)
   drawPlanet()
   pop();
 
@@ -240,20 +238,32 @@ let opacityStar = color(250, 240, 255);
 }
 
 function drawPlanet() {
-//Planet bodyy
+// planet ring full
+noFill();
+stroke(180, 220, 250);
+strokeWeight(16);
+ellipse(400, 400, 240, 60, 0, TWO_PI);
+
+//Planet body
 noStroke();
 fill(120,180,255); 
-ellipse(400,100,80);
+ellipse(400,400,160);
 
-//Highlight of plaenet
+//Highlight of planet
 fill(220, 230, 255, 120);
-ellipse(390,90,30);
+ellipse(420,370,60);
+
+fill(120,180,255); //same as planet body colour
+ellipse(410,385,90,60);
 
 //Ring of plaenet
 noFill(); 
 stroke(180, 220, 250, 150);
-strokeWeight(8);
-ellipse(400,100,120,60);
+strokeWeight(16);
+//prompted AI copilot to make it so front half of ring only shows using arc function 
+  arc(400, 400, 240, 60, PI, 0);
+
+
 
 noStroke();
 
