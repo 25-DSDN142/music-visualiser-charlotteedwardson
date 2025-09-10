@@ -117,7 +117,15 @@ if(cloudY > 2500){ // ends just off screen
 cloudY = -100
 }
 
+//draw planets
+  push();
+  translate(-100, 50)
+  scale(0.8)
+  drawPlanet()
+  pop();
+
   drawLand()
+
 }
 
 function drawLand() {
@@ -229,4 +237,25 @@ let opacityStar = color(250, 240, 255);
    vertex(250, 350);
    vertex(160, 200); 
    endShape(CLOSE);
+}
+
+function drawPlanet() {
+//Planet bodyy
+noStroke();
+fill(120,180,255); 
+ellipse(400,100,80);
+
+//Highlight of plaenet
+fill(220, 230, 255, 120);
+ellipse(390,90,30);
+
+//Ring of plaenet
+noFill(); 
+stroke(180, 220, 250, 150);
+strokeWeight(8);
+ellipse(400,100,120,60);
+
+noStroke();
+
+
 }
