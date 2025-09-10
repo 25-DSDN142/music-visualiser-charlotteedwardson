@@ -237,7 +237,7 @@ let opacityStar = color(250, 240, 255);
    endShape(CLOSE);
 }
 
-function drawPlanet() {
+function drawPlanet() { //planet should look like a see through cartoon bubble
 // planet ring full
 noFill();
 stroke(180, 220, 250);
