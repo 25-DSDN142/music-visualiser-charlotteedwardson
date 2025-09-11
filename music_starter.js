@@ -1,13 +1,18 @@
+//positioning of elements on screen
 let cloudY = -100; // starts just offscreen
 let starY = -1250; // comes in after clouds
+let planetY = -2000; // comes in after stars
+
+//sizes of elements on screen that will be affected by the volumes
 let cloudSize = 200; //200
 let starSize = 100; // 100
+let planetSize = 200; //200
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
-cloudSize = map(other, 0, 100, 130, 180); //subtle cloud size changes with other volumes
-starSize = map(vocal, 0, 100, 80, 130);   // subtle star size changes with vocal volunems
-   
+cloudSize = map(bass, 0, 100, 130, 180); //subtle cloud size changes with bass volumes
+starSize = map(vocal, 0, 100, 80, 130);   // subtle star size changes with vocal volumes
+planetSize = map(other, 0, 100, 190, 230); //subtle planet size changes with drums volume
 //background colour changes over time with AI copilot created star field
   var r = 120;
   var g = 100;
@@ -38,8 +43,8 @@ let firstRun = true;
 
   //commented out//translate(width/2, height/2); // Center origin
 
-  // Map bass (0-100) to lerp amount (0-1)
-  let lerpAmt = map(bass, 0, 100, 0, 1);
+  // Map other (0-100) to lerp amount (0-1)
+  let lerpAmt = map(other, 0, 100, 0, 1);
 
   for (let star of stars) {
     // Move star forward
@@ -119,8 +124,16 @@ cloudY = -100
 
 //draw planets
   push();
+  translate(-250, planetY-100) //left
   drawPlanet()
   pop();
+
+  push();
+  translate(-50, planetY-100) //left
+  drawPlanet()
+  pop();
+
+planetY = planetY +0.4
 
   drawLand()
 
@@ -247,16 +260,16 @@ ellipse(400, 400, 240, 60, 0, TWO_PI);
 //Planet body
 noStroke();
 fill(120,180,255); 
-ellipse(400,400,160);
+ellipse(400,400,planetSize-40);
 
 //Highlight of planet
 fill(220, 230, 255, 120);
-ellipse(420,370,60);
+ellipse(420,370,planetSize-140);
 
 fill(120,180,255); //same as planet body colour
-ellipse(410,385,90,60);
+ellipse(410,385,90,planetSize-140);
 
-//Ring of plaenet
+//Ring of planet front half
 noFill(); 
 stroke(180, 220, 250, 150);
 strokeWeight(16);
