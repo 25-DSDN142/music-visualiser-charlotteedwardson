@@ -88,6 +88,12 @@ let firstRun = true;
   drawStar()
   pop();
 
+  push();
+  translate(100, starY-250);
+  scale(0.6)
+  drawStar()
+  pop();
+
   starY = starY +0.4
 
 if(starY > 3500){ // ends just off screen
@@ -124,12 +130,12 @@ cloudY = -100
 
 //draw planets
   push();
-  translate(-250, planetY-100) //left
+  translate(-250, planetY+25) //left
   drawPlanet()
   pop();
 
   push();
-  translate(-50, planetY-100) //left
+  translate(0, planetY+350) //left
   drawPlanet()
   pop();
 
