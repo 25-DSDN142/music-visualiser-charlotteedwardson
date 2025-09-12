@@ -1,4 +1,8 @@
 //positioning of elements on screen
+let stars = [];
+const numStars = 100;
+let firstRun = true;
+
 let cloudY = -100; // starts just offscreen
 let starY = -1250; // comes in after clouds
 let planetY = -2000; // comes in after stars
@@ -9,6 +13,7 @@ let starSize = 100; // 100
 let planetSize = 200; //200
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
+
 
 cloudSize = map(bass, 0, 100, 130, 180); //subtle cloud size changes with bass volumes
 starSize = map(vocal, 0, 100, 80, 130);   // subtle star size changes with vocal volumes
@@ -22,12 +27,6 @@ planetSize = map(other, 0, 100, 190, 230); //subtle planet size changes with dru
   g = map(frameCount-500, 0, 960, 200, 100);
   b = map(frameCount-500, 0, 960, 250, 150);
   background(r, g, b);
-  
-// --- Add these globals ---
-let stars = [];
-const numStars = 100;
-let firstRun = true;
-
 
   // --- Initialize stars on first run ---
   if (firstRun) {
@@ -141,8 +140,9 @@ cloudY = -100
 
 planetY = planetY +0.4
 
-  drawLand()
+  drawLand();
 
+  drawLyrics(words, vocal);
 }
 
 function drawLand() {
@@ -281,10 +281,19 @@ stroke(180, 220, 250, 150);
 strokeWeight(16);
 //prompted AI copilot to make it so front half of ring only shows using arc function 
   arc(400, 400, 240, 60, PI, 0);
-
-
-
 noStroke();
+}
 
+function drawLyrics(words, vocal) {
+    textFont('BrushScript'); // please use CSS safe fonts
+  rectMode(CENTER)
+  textSize(24);
 
+  //set font colour
+  fill(200, 140, 200)
+
+   // display "words"
+   textAlign(CENTER);
+   textSize(vocal);
+   text(words, width/2, height/3);
 }
