@@ -57,7 +57,7 @@ function setup() {
   angleMode(DEGREES);
 
   // create text inputs
-  textInput = createInput('words...');
+  textInput = createInput('Love Like You');
   textInput.parent('wordsContainer');
 
   // create sliders
