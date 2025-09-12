@@ -15,8 +15,8 @@ let planetSize = 200; //200
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
 
-cloudSize = map(bass, 0, 100, 130, 180); //subtle cloud size changes with bass volumes
-starSize = map(vocal, 0, 100, 80, 130);   // subtle star size changes with vocal volumes
+cloudSize = map(vocal, 0, 100, 130, 180); //subtle cloud size changes with bass volumes
+starSize = map(bass, 0, 100, 80, 150);   // subtle star size changes with vocal volumes
 planetSize = map(other, 0, 100, 190, 230); //subtle planet size changes with drums volume
 //background colour changes over time with AI copilot created star field
   var r = 120;
@@ -70,26 +70,50 @@ planetSize = map(other, 0, 100, 190, 230); //subtle planet size changes with dru
 
   //draw stars
    push();
-  translate(200, starY+100)
-  scale(0.9)
+  translate(200, starY+100);
+  scale(0.9);
   drawStar()
   pop();
 
   push();
-  translate(-100,starY-50)
-  scale(0.7)
+  translate(-80,starY-50);
+  scale(0.7);
   drawStar()
   pop();
 
   push();
   translate(0, starY+350);
-  scale(0.6)
+  scale(0.6);
   drawStar()
   pop();
 
   push();
-  translate(100, starY-250);
-  scale(0.6)
+  translate(170, starY-250);
+  scale(0.6);
+  drawStar()
+  pop();
+
+  push();
+  translate(100, starY-750);
+  scale(0.4);
+  drawStar()
+  pop();
+
+  push();
+  translate(300, starY-425);
+  scale(0.4);
+  drawStar()
+  pop();
+
+  push();
+  translate(280, starY-1100);
+  scale(0.4);
+  drawStar()
+  pop();
+
+  push();
+  translate(80, starY-1200);
+  scale(0.4);
   drawStar()
   pop();
 
@@ -104,45 +128,72 @@ starY = -100
 
   //draw clouds
   push();
-  translate(200, cloudY-150)
-  scale(0.8)
+  translate(200, cloudY-100);
+  scale(0.8);
   drawCloud() 
   pop();
 
   push();
-  translate(150, cloudY-400);
-  scale(0.7)
+  translate(275, cloudY-550);
+  scale(0.7);
+  drawCloud() 
+  pop();
+
+  push();
+  translate(50, cloudY-400);
+  scale(1.1);
   drawCloud()
   pop();
 
   push();
   translate(-200, cloudY-250);
-  scale(0.9)
+  scale(0.9);
+  drawCloud()
+  pop();
+
+  push();
+  translate(-170, cloudY-500);
+  scale(0.6);
   drawCloud()
   pop();
 
   cloudY = cloudY +0.4
 
-if(cloudY > 2500){ // ends just off screen
+if(cloudY > 2250){ // ends just off screen
 cloudY = -100
 }
 
 //draw planets
   push();
-  translate(-250, planetY+25) //left
+  translate(-250, planetY-600);
+  scale(1.1);
   drawPlanet()
   pop();
 
   push();
-  translate(0, planetY+350) //left
+  translate(150, planetY-150); 
+  scale(0.7);
+  drawPlanet()
+  pop();
+
+  push();
+  translate(-200, planetY+0); 
+  scale(0.9);
+  drawPlanet()
+  pop();
+
+  // big mama planet with clouds in background
+  push();
+  translate(-610, planetY-1550); 
+  scale(2.2);
   drawPlanet()
   pop();
 
 planetY = planetY +0.4
 
-  drawLand();
+  drawLand()
 
-  drawLyrics(words, vocal);
+  drawLyrics(words, vocal)
 }
 
 function drawLand() {
@@ -290,7 +341,7 @@ function drawLyrics(words, vocal) {
   textSize(24);
 
   //set font colour
-  fill(200, 140, 200)
+  fill(170, 110, 170)
 
    // display "words"
    textAlign(CENTER);
